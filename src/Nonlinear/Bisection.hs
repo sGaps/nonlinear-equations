@@ -6,6 +6,9 @@ import Data.Function    (on)
 import Data.List        (scanl')
 import Data.Tuple.Extra (thd3)
 
+-- takeWhile that includes the point where the condition isn't met
+takeInclusive predicate = uncurry (<>) . fmap (take 1) . span predicate
+
 -- on 1 and 2 > table with the following data:
 --      i | x_i | f( x_i ) | f'( x_i )
 
@@ -37,8 +40,7 @@ boundedBisection n f lowest highest =
                     else (next, high, computed)
 
 -- returns (halves , (low , high, last computed))
--- TODO: replace takeWhile with split or break, so I can include the iteration where it stops
-bisection n sigma epsilon f low high = takeWhile stopCriteria . boundedBisection n f low $ high
+bisection n sigma epsilon f low high = takeInclusive stopCriteria . boundedBisection n f low $ high
     where rangePrecision = (>= sigma) . abs . fst
           rootPrecision  = (>= epsilon) . abs . thd3 . snd 
           stopCriteria iter = rangePrecision iter || rootPrecision iter

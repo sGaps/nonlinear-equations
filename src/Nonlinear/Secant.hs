@@ -2,9 +2,9 @@ module Nonlinear.Secant (
     secant
 ) where
 
-import Data.Function    (on)
 import Data.Tuple.Extra (fst3,snd3,thd3)
 
+takeInclusive predicate = uncurry (<>) . fmap (take 1) . span predicate
 
 absurdDistance = 1 / 0
 absurdValue    = 1 / 0
@@ -22,10 +22,9 @@ boundedSecant n f lowest highest =
                 next         = shortest - (f shortest) * increment
                 distance     = shortest - next
                 computed     = f next
-                points       = (low, next, shortest)
-            in (distance, computed, points)
+            in (distance, computed, (low, next, shortest))
 
-secant n sigma epsilon f low high = takeWhile stopCriteria . boundedSecant n f low $ high
+secant n sigma epsilon f low high = takeInclusive stopCriteria . boundedSecant n f low $ high
     where rangePrecision = (>= sigma) . abs . fst3
           rootPrecision  = (>= epsilon) . abs . snd3
           stopCriteria iter = rangePrecision iter || rootPrecision iter
