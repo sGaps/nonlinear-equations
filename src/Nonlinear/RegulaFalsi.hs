@@ -20,10 +20,10 @@ boundedRegula n f lowest highest =
                 distance = position - high
                 computed = f position
 
-                shortest = if computed * f high < 0
-                            then high
-                            else low
-            in (distance, computed, (low,shortest,position))
+                (overwrote,shortest) = if computed * f high < 0
+                            then (low,  high)
+                            else (high, low)
+            in (distance, computed, (overwrote,shortest,position))
 
 regulaFalsi n sigma epsilon f low high = takeInclusive stopCriteria . boundedRegula n f low $ high
     where rangePrecision = (>= sigma) . abs . fst3
