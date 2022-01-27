@@ -10,13 +10,12 @@ b = 36.875
 c = 7.4
 d = 13.2
 
--- Simplified expressions
-leftTerm  t = exp $ -(t^2) + a*t - b
-rightTerm t = exp $ -(t^2) + c*t - d
+leftTerm  t = exp ( -( (t^2) - a*t + b ) )
+rightTerm t = exp ( -( (t^2) - c*t + d ) )
 
 -- The input function and its derivative
 f  t = 1 - leftTerm t - rightTerm t
-f' t = 1 - (a - 2*t)*(leftTerm t) - (c - 2*t)*(rightTerm t)
+f' t = - (a - 2*t)*(leftTerm t) - (c - 2*t)*(rightTerm t)
 
 -- The set of initial points (aka: each t0)
 -- how many digits of accuracy

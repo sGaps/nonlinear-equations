@@ -3,8 +3,6 @@ module Main (main) where
 import Nonlinear.Newton (newton)
 import Control.Monad    (forM_)
 
--- prev. l/p3
-
 -- Constants for `f` and `f'`
 a = 1/4
 b = 1/2
@@ -18,7 +16,7 @@ f' x = b*x - sin (x) - x*cos (x) + sin (2*x)
 -- max number of iterations
 startpoints = [pi/2, 5*pi, 10*pi]   -- the first is fine, the second is better, but the last one diverges.
 accuracy    = 1e-7                  -- It might be because the function's the form/derivative.
-limit       = 100
+limit       = 7000                  -- what if... we just give it enough time?
 
 -- TODO: move;
 -- for string concatenation

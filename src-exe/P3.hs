@@ -4,8 +4,6 @@ import Nonlinear.Secant      (secant)
 import Nonlinear.RegulaFalsi (regulaFalsi)
 import Control.Monad         (forM_)
 
--- prev. l/p3
-
 -- Constants for `f` and `f'`
 a = 2
 b = 34/7
@@ -15,7 +13,7 @@ d = 173/343
 -- The input function
 f x = a*(x^3) - b*(x^2) + c*x - d
 
--- The set of initial points (aka: each t0)
+-- The given range
 -- how many digits of accuracy
 -- max number of iterations
 startrange = (-1.0,1.0)
@@ -29,10 +27,10 @@ _tab = showChar '\t'
 _sep = showChar '\t'
 
 -- handy aliases
+type Iteration a = (a, a, (a,a,a))
 regulaMethod = regulaFalsi limit (accuracy^2) accuracy f
 secantMethod = secant      limit (accuracy^2) accuracy f
 
-type Iteration a = (a, a, (a,a,a))
 
 main :: IO ()
 main = do
@@ -47,7 +45,7 @@ main = do
     runMethod "Running Secant method"       secantMethod
     runMethod "Running Regula Falsi method" regulaMethod
 
-runMethod :: String -> (Double -> Double -> [Iteration Double]) -> IO ()
+runMethod :: String -> (Float -> Float -> [Iteration Float]) -> IO ()
 runMethod title method = do
     let results = uncurry method startrange
 
@@ -56,9 +54,9 @@ runMethod title method = do
              . _tab . shows startrange $ ""
 
     putStrLn . _str "iter"
-             . _sep . _str "x_{i-1}" . _sep . _str "f(x_{i-1})"
-             . _sep . _str "x_i"     . _sep . _str "f(x_i)"
-             . _sep . _str "x_{i+1}" . _sep . _str "f(x_{i+1})"
+             . _sep . _str "x_{i-1}"  . _sep . _str "f(x_{i-1})"
+             . _sep . _str "x_i"      . _sep . _str "f(x_i)"
+             . _sep . _str "x_{i+1}*" . _sep . _str "f(x_{i+1}*)"
              $ ""
 
     forM_ (zip [0..] results) (\(i, (dist,f_last,(x_prev, x_curr, x_next))) -> do

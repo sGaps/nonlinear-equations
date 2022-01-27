@@ -9,6 +9,7 @@ takeInclusive predicate = uncurry (<>) . fmap (take 1) . span predicate
 -- on 1 and 2 > table with the following data:
 --      i | x_i | f( x_i ) | f'( x_i )
 
+absurdDistance :: RealFrac x => x
 absurdDistance = 1 / 0
 
 boundedNewton n f f' x0 = 

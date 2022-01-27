@@ -6,6 +6,7 @@ import Data.Tuple.Extra (fst3,snd3,thd3)
 
 takeInclusive predicate = uncurry (<>) . fmap (take 1) . span predicate
 
+absurdDistance , absurdValue :: RealFrac x => x
 absurdDistance = 1 / 0
 absurdValue    = 1 / 0
 

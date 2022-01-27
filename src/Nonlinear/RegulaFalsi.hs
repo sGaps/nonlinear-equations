@@ -7,6 +7,7 @@ import Data.Tuple.Extra (fst3,snd3,thd3)
 -- takeWhile that includes the point where the condition isn't met
 takeInclusive predicate = uncurry (<>) . fmap (take 1) . span predicate
 
+absurdDistance , absurdValue :: RealFrac x => x
 absurdDistance = 1 / 0
 absurdValue    = 1 / 0
 
