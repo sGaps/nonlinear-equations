@@ -49,10 +49,12 @@ main = do
 
     let iterations          = uncurry regulaMethod startrange
         (last_ix,last_iter) = last . zip [1..] $ iterations
-        minutes   = (thd3 . thd3) last_iter
-        dosage    = c minutes
+        hours     = (thd3 . thd3) last_iter
+        minutes   = 60 * hours
+        dosage    = c hours
 
-    putStrLn . _str "Time in minutes (T):"       . _tab . shows minutes . _eol
+    putStrLn . _str "Time in hours (t):"         . _tab . shows hours   . _eol
+             . _str "Time in minutes:"           . _tab . shows minutes . _eol
              . _str "Dosage in milliliters (d):" . _tab . shows dosage  . _eol
              . _str "After (" . shows last_ix . _str ") iterations" . _eol
              $ ""
@@ -64,7 +66,6 @@ main = do
 
     forM_ (zip [0..] iterations) (\(i, (_,_,(_, x_low, x_high))) -> do
         putStrLn . shows i 
-                 . _sep . shows x_low  . _sep . shows (c x_low)
                  . _sep . shows x_low  . _sep . shows (c x_low)
                  . _sep . shows x_high . _sep . shows (c x_high)
                  $ ""

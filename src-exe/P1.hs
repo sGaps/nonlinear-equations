@@ -88,11 +88,12 @@ part2 = do
                             $ fromPart1
         rootsFound = filter notPreviouslyFound convergentRoots
 
-    putStrLn . _str "PointID" . _sep . _str "t0"
+    putStrLn . _str "PointID" . _sep . _str "t0" . _sep . _str "f(t0)"
              . _sep . _str "t" . _sep . _str "f(t)" . _sep . _str "f'(t)" $ ""
     forM_ (zip [0..] rootsFound) (\(i, (t0, (t, ft, dist))) -> do
         putStrLn . shows i 
                  . _sep . shows t0
+                 . _sep . shows (f t0)
                  . _sep . shows t
                  . _sep . shows ft
                  . _sep . shows (f' t) $ ""
